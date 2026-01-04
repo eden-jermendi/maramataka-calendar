@@ -1,12 +1,8 @@
-export type MaramatakaDay = {
-  date: string;       // ISO string
-  phase: MoonPhase;
-  notes?: string;
-};
-
-export type MoonPhase =
-  | "New"
-  | "Waxing"
-  | "Full"
-  | "Waning"
-  | "Other";
+export type LunarDay = {
+  id: string
+  name: string
+  nameTeReo: string
+  energy: 'low' | 'medium' | 'high'
+  activities: Array<'fishing' | 'gardening' | 'eeling' | 'crayfishing'>
+  description: string
+}
