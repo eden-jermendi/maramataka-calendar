@@ -11,6 +11,8 @@ This project is currently in the **setup phase**: the folder structure and core 
 - Display lunar calendar phases with Māori names.
 - Provide a short description of energy levels associated with each phase.
 - Include daily recommendations based on the phase.
+
+  Stretch:
 - Allow users to write and save personal notes tied to each day and lunar phase.
 - Maintain a clean, beautiful UI with future potential for backend integration and full-stack capabilities.
 
@@ -29,11 +31,26 @@ This project is currently in the **setup phase**: the folder structure and core 
 
 ## Next Steps
 
-1. Implement basic page skeleton and UI placeholders.
-2. Create hooks for handling lunar phase data.
-3. Map lunar phases to Māori names and energy guidance.
-4. Implement personal notes editor and persistence.
-5. Begin UI styling and polish.
+1. Lock the domain model
+- Update LunarDay type.
+- Enforce ASCII-only slug IDs.
+- Single source of truth.
+2.	Align data
+- Update dataset.
+- Add lunarDaysById lookup map.
+3. Add safe selector
+- monthId + dayNumber → lunarDay
+- Validate and return safe result (no UI crashes).
+4. Stub one month
+- 5–10 days only.
+- All IDs must resolve.
+5.	Wire Today + Month
+- Use mock { monthId, dayNumber }
+- Render via safe lookup.
+- No Gregorian logic.
+6.	Extend only after stable
+- Add ordering, legend, sources.
+- Date accuracy is Phase 2.
 
 ---
 
