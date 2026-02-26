@@ -38,6 +38,7 @@ const Month: React.FC = () => {
           )
         })}
       </ul>
+      {/* // TODO: add legend when month grid/calendar view is introduced */}
     </div>
   )
 }
