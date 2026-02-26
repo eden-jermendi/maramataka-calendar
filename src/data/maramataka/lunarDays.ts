@@ -1,15 +1,10 @@
-export type LunarDay = {
-  id: string
-  name: string // Te Reo name
-  energy: 'low' | 'medium' | 'high'
-  activities: Array<'fishing' | 'gardening' | 'eeling' | 'crayfishing'>
-  description: string
-}
+import type { LunarDay } from '../../domain/maramataka/types'
 
 export const lunarDays: LunarDay[] = [
   {
     id: 'whiro',
-    name: 'Whiro',
+    nameTr: 'Whiro',
+    nameEn: 'Reflection and rest',
     energy: 'low',
     activities: [],
     description:
@@ -17,7 +12,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'tirea',
-    name: 'Tirea',
+    nameTr: 'Tirea',
+    nameEn: 'Rising energy tasks',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
     description:
@@ -25,14 +21,16 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'ariroa',
-    name: 'Ariroa',
+    nameTr: 'Ariroa',
+    nameEn: 'Balanced routine work',
     energy: 'medium',
     activities: ['gardening'],
     description: 'Balanced energy. Ideal for tending gardens or routine work.',
   },
   {
     id: 'rakaumatohi',
-    name: 'Rākaumatohi',
+    nameTr: 'Rākaumatohi',
+    nameEn: 'High energy action',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
     description:
@@ -40,7 +38,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'tangaroa-whakapau',
-    name: 'Tangaroa‑Whakapau',
+    nameTr: 'Tangaroa-Whakapau',
+    nameEn: 'Peak water gathering',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
     description:
@@ -48,14 +47,16 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'hoata',
-    name: 'Hoata',
+    nameTr: 'Hoata',
+    nameEn: 'Steady outdoor work',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
     description: 'Steady energy for outdoor work and connecting with nature.',
   },
   {
     id: 'huna',
-    name: 'Huna',
+    nameTr: 'Huna',
+    nameEn: 'Quiet reflective rest',
     energy: 'low',
     activities: [],
     description:
@@ -63,7 +64,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'takirau',
-    name: 'Takirau',
+    nameTr: 'Takirau',
+    nameEn: 'Preparation and learning',
     energy: 'medium',
     activities: ['gardening'],
     description:
@@ -71,7 +73,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'mawharu',
-    name: 'Mawharu',
+    nameTr: 'Mawharu',
+    nameEn: 'Routine outdoor focus',
     energy: 'medium',
     activities: ['fishing'],
     description:
@@ -79,7 +82,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'oike',
-    name: 'Oike',
+    nameTr: 'Oike',
+    nameEn: 'Plant tending planning',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
     description:
@@ -87,7 +91,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'otane',
-    name: 'Ōtane',
+    nameTr: 'Ōtane',
+    nameEn: 'Active social tasks',
     energy: 'high',
     activities: ['gardening', 'fishing'],
     description:
@@ -95,7 +100,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'okoro',
-    name: 'Ōkoro',
+    nameTr: 'Ōkoro',
+    nameEn: 'Steady tending work',
     energy: 'medium',
     activities: ['eeling', 'gardening'],
     description:
@@ -103,7 +109,8 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'ohua',
-    name: 'Ōhūa',
+    nameTr: 'Ōhūa',
+    nameEn: 'Light garden prep',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
     description:
@@ -111,14 +118,16 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'korekore',
-    name: 'Korekore',
+    nameTr: 'Korekore',
+    nameEn: 'Inward self care',
     energy: 'low',
     activities: [],
     description: 'Reflective, quiet day. Focus on inward tasks and self-care.',
   },
   {
     id: 'tuatahi',
-    name: 'Tuatahi',
+    nameTr: 'Tuatahi',
+    nameEn: 'Medium effort tasks',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
     description:
@@ -126,21 +135,24 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'orongonui',
-    name: 'Orongonui',
+    nameTr: 'Orongonui',
+    nameEn: 'Active food gathering',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
     description: 'High-energy day. Ideal for active tasks and gathering food.',
   },
   {
     id: 'tamatea-aio',
-    name: 'Tamatea‑Āio',
+    nameTr: 'Tamatea‑Āio',
+    nameEn: 'Introspective rest planning',
     energy: 'low',
     activities: [],
     description: 'Quiet, introspective day. Rest, reflect, and plan.',
   },
   {
     id: 'atua',
-    name: 'Atua',
+    nameTr: 'Atua',
+    nameEn: 'Creative steady preparation',
     energy: 'medium',
     activities: ['gardening'],
     description:
@@ -148,14 +160,16 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'whakahaehae',
-    name: 'Whakahaehae',
+    nameTr: 'Whakahaehae',
+    nameEn: 'Energetic productive work',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
     description: 'Energetic day. Excellent for active and productive work.',
   },
   {
     id: 'rawea',
-    name: 'Rawea',
+    nameTr: 'Rawea',
+    nameEn: 'Garden light work',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
     description:
@@ -163,14 +177,16 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'omutu',
-    name: 'Ōmutu',
+    nameTr: 'Ōmutu',
+    nameEn: 'Practical preparation work',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
     description: 'Steady day for practical work and preparation.',
   },
   {
     id: 'tamatea-a-ngana',
-    name: 'Tamatea‑ā‑Ngana',
+    nameTr: 'Tamatea-ā-Ngana',
+    nameEn: 'Learning and planning',
     energy: 'medium',
     activities: ['gardening'],
     description:
@@ -178,21 +194,24 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'turu',
-    name: 'Turu',
+    nameTr: 'Turu',
+    nameEn: 'Calm inner rest',
     energy: 'low',
     activities: [],
     description: 'Reflective, calm day. Focus on rest and inner work.',
   },
   {
     id: 'whakapiri',
-    name: 'Whakapiri',
+    nameTr: 'Whakapiri',
+    nameEn: 'Balanced outdoor tasks',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
     description: 'Balanced energy for medium-effort tasks and outdoor work.',
   },
   {
     id: 'mutuwhenua',
-    name: 'Mutuwhenua',
+    nameTr: 'Mutuwhenua',
+    nameEn: 'Preparation light activities',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
     description:
