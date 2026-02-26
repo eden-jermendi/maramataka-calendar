@@ -8,6 +8,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Reflection and rest',
     energy: 'low',
     activities: [],
+    sourceIds: ['maramataka-core'],
     description:
       'A day for reflection, caution, and inward focus. Rest and plan your actions.',
   },
@@ -18,6 +19,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Rising energy tasks',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
+    sourceIds: ['maramataka-core'],
     description:
       'Energy rises. Good for practical outdoor tasks and steady progress.',
   },
@@ -28,6 +30,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Balanced routine work',
     energy: 'medium',
     activities: ['gardening'],
+    sourceIds: ['maramataka-core'],
     description: 'Balanced energy. Ideal for tending gardens or routine work.',
   },
   {
@@ -37,6 +40,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'High energy action',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
+    sourceIds: ['maramataka-core'],
     description:
       'High energy for active tasks and physical work. Great for achieving goals.',
   },
@@ -47,6 +51,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Peak water gathering',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
+    sourceIds: ['maramataka-core'],
     description:
       'Peak energy in water activities. Good for gathering food and physical effort.',
   },
@@ -57,6 +62,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Steady outdoor work',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
+    sourceIds: ['maramataka-core'],
     description: 'Steady energy for outdoor work and connecting with nature.',
   },
   {
@@ -66,6 +72,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Quiet reflective rest',
     energy: 'low',
     activities: [],
+    sourceIds: ['maramataka-core'],
     description:
       'Quiet, reflective day. Suitable for rest, contemplation, and meditation.',
   },
@@ -76,6 +83,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Preparation and learning',
     energy: 'medium',
     activities: ['gardening'],
+    sourceIds: ['maramataka-core'],
     description:
       'Moderate energy. Good for preparation, learning, and steady tasks.',
   },
@@ -86,6 +94,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Routine outdoor focus',
     energy: 'medium',
     activities: ['fishing'],
+    sourceIds: ['maramataka-core'],
     description:
       'Balanced energy. Focus on routine tasks and light outdoor work.',
   },
@@ -96,6 +105,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Plant tending planning',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
+    sourceIds: ['maramataka-core'],
     description:
       'Good day for tending plants, small-scale food gathering, and planning.',
   },
@@ -106,6 +116,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Active social tasks',
     energy: 'high',
     activities: ['gardening', 'fishing'],
+    sourceIds: ['maramataka-core'],
     description:
       'High-energy day. Ideal for active tasks and social gatherings.',
   },
@@ -116,6 +127,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Steady tending work',
     energy: 'medium',
     activities: ['eeling', 'gardening'],
+    sourceIds: ['maramataka-core'],
     description:
       'Moderate energy. Steady outdoor work and tending tasks favored.',
   },
@@ -126,6 +138,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Light garden prep',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
+    sourceIds: ['maramataka-core'],
     description:
       'Good for light outdoor work, tending gardens, or preparing food.',
   },
@@ -136,6 +149,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Inward self care',
     energy: 'low',
     activities: [],
+    sourceIds: ['maramataka-core'],
     description: 'Reflective, quiet day. Focus on inward tasks and self-care.',
   },
   {
@@ -145,6 +159,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Medium effort tasks',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
+    sourceIds: ['maramataka-core'],
     description:
       'Balanced energy for medium-effort tasks and steady outdoor work.',
   },
@@ -155,15 +170,17 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Active food gathering',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
+    sourceIds: ['maramataka-core'],
     description: 'High-energy day. Ideal for active tasks and gathering food.',
   },
   {
     id: 'tamatea-aio',
     order: 17,
-    nameTr: 'Tamatea‑Āio',
+    nameTr: 'Tamatea-Āio',
     nameEn: 'Introspective rest planning',
     energy: 'low',
     activities: [],
+    sourceIds: ['maramataka-core'],
     description: 'Quiet, introspective day. Rest, reflect, and plan.',
   },
   {
@@ -173,6 +190,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Creative steady preparation',
     energy: 'medium',
     activities: ['gardening'],
+    sourceIds: ['maramataka-core'],
     description:
       'Moderate energy. Good for creative, steady tasks and preparation.',
   },
@@ -183,6 +201,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Energetic productive work',
     energy: 'high',
     activities: ['fishing', 'crayfishing'],
+    sourceIds: ['maramataka-core'],
     description: 'Energetic day. Excellent for active and productive work.',
   },
   {
@@ -192,6 +211,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Garden light work',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
+    sourceIds: ['maramataka-core'],
     description:
       'Balanced day. Favorable for tending gardens and light outdoor work.',
   },
@@ -202,6 +222,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Practical preparation work',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
+    sourceIds: ['maramataka-core'],
     description: 'Steady day for practical work and preparation.',
   },
   {
@@ -211,6 +232,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Learning and planning',
     energy: 'medium',
     activities: ['gardening'],
+    sourceIds: ['maramataka-core'],
     description:
       'Moderate energy. Good for learning, planning, and steady work.',
   },
@@ -221,6 +243,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Calm inner rest',
     energy: 'low',
     activities: [],
+    sourceIds: ['maramataka-core'],
     description: 'Reflective, calm day. Focus on rest and inner work.',
   },
   {
@@ -230,6 +253,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Balanced outdoor tasks',
     energy: 'medium',
     activities: ['gardening', 'eeling'],
+    sourceIds: ['maramataka-core'],
     description: 'Balanced energy for medium-effort tasks and outdoor work.',
   },
   {
@@ -239,6 +263,7 @@ export const lunarDays: LunarDay[] = [
     nameEn: 'Preparation light activities',
     energy: 'medium',
     activities: ['gardening', 'fishing'],
+    sourceIds: ['maramataka-core'],
     description:
       'Steady day. Good for preparation and light outdoor activities.',
   },
