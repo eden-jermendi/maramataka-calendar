@@ -1,5 +1,6 @@
 import Today from '../pages/Today'
 import Month from '../pages/Months'
+import About from '../pages/About'
 
 function App() {
   return (
@@ -8,6 +9,9 @@ function App() {
       <Today />
       <br></br>
       <Month />
+      <br></br>
+      <br></br>
+      <About />
     </div>
   )
 }
