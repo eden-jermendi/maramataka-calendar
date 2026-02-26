@@ -1,56 +1,37 @@
 import React from 'react'
-import { lunarDays } from '../data/maramataka/lunarDays'
-import { getLunarDayForDate } from '../data/maramataka/maramatakaService'
-import type { LunarDay } from '../domain/maramataka/types'
+import { getLunarDaySafe } from '../domain/maramataka/selectors'
 
 const Today: React.FC = () => {
-  // ADDED: Define currentDate and cycleStartDate
-  const currentDate = new Date() // Get today's Gregorian date
-  const cycleStartDate = new Date('2026-01-01T00:00:00Z') // Define your Maramataka cycle start date (adjust as needed)
+  const monthId = 'kohitatea'
+  const dayNumber = 1
 
-  const currentLunarDay: LunarDay | undefined = getLunarDayForDate(
-    currentDate,
-    cycleStartDate,
-    lunarDays,
-  )
+  const result = getLunarDaySafe(monthId, dayNumber)
 
-  if (!currentLunarDay) {
+  if (!result.ok) {
     return (
       <div className="TodayPage">
-        <h1>Loading Maramataka Day...</h1>
-        <p>
-          Could not determine the current lunar day. Please check the date and
-          cycle configuration.
-        </p>
+        <h1>Today</h1>
+        <p>Unable to load lunar day: {result.error}</p>
       </div>
     )
   }
 
+  const currentLunarDay = result.lunarDay
+
   return (
     <div className="TodayPage">
-      <h2>Today's Maramataka Day:</h2>
+      <h2>Today&apos;s Maramataka Day:</h2>
       <h1>{currentLunarDay.nameTr}</h1>
       <p>
-        <strong>Energy:</strong>{' '}
-        {currentLunarDay.energy.charAt(0).toUpperCase() +
-          currentLunarDay.energy.slice(1)}
+        <strong>Energy:</strong> {currentLunarDay.energy}
       </p>
       <p>
         <strong>Activities:</strong>{' '}
         {currentLunarDay.activities.length > 0
-          ? currentLunarDay.activities
-              .map(
-                (activity) =>
-                  activity.charAt(0).toUpperCase() + activity.slice(1),
-              )
-              .join(', ')
+          ? currentLunarDay.activities.join(', ')
           : 'No specific activities recommended.'}
       </p>
       <p className="description">{currentLunarDay.description}</p>
-
-      <p className="gregorian-date">
-        Gregorian Date: {currentDate.toLocaleDateString('en-NZ')}
-      </p>
     </div>
   )
 }
