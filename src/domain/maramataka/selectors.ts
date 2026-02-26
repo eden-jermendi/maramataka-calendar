@@ -1,7 +1,6 @@
 import type { LunarDay } from './types'
 import { lunarDaysById } from '../../data/maramataka/lunarDays'
-// use your existing months source here:
-// import { maramatakaMonthsById } from '../data/maramataka/months' or whateva
+import { maramatakaMonthsById } from '../../data/maramataka/lunarMonths'
 
 type LookupOk = { ok: true; lunarDay: LunarDay }
 type LookupErr = {
@@ -29,11 +28,16 @@ export function getLunarDaySafe(
     return { ok: false, error: 'INVALID_DAY_NUMBER' }
   }
 
-  const day = month.days[dayNumber - 1]
-  if (!day?.lunarDayId) return { ok: false, error: 'MISSING_LUNAR_DAY_ID' }
+  const lunarDayId = month.days[dayNumber - 1]
 
-  const lunarDay = lunarDaysById[day.lunarDayId]
-  if (!lunarDay) return { ok: false, error: 'MISSING_LUNAR_DAY_DATA' }
+  if (!lunarDayId) {
+    return { ok: false, error: 'MISSING_LUNAR_DAY_ID' }
+  }
+
+  const lunarDay = lunarDaysById[lunarDayId]
+  if (!lunarDay) {
+    return { ok: false, error: 'MISSING_LUNAR_DAY_DATA' }
+  }
 
   return { ok: true, lunarDay }
 }
