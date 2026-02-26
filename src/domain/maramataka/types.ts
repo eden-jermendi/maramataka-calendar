@@ -1,7 +1,7 @@
 export type LunarDay = {
   id: string
-  name: string
-  nameTeReo: string
+  nameEn: string
+  nameTr: string
   energy: 'low' | 'medium' | 'high'
   activities: Array<'fishing' | 'gardening' | 'eeling' | 'crayfishing'>
   description: string

@@ -1,7 +1,7 @@
-import React from 'react' // ADDED: Required for JSX and React.FC
+import React from 'react'
 import { lunarDays } from '../data/maramataka/lunarDays'
-import { getLunarDayForDate } from '../data/maramataka/maramatakaService' // FIXED: Destructured import
-import type { LunarDay } from '../../domain/maramataka/types' // ADDED: Missing type import
+import { getLunarDayForDate } from '../data/maramataka/maramatakaService'
+import type { LunarDay } from '../domain/maramataka/types'
 
 const Today: React.FC = () => {
   // ADDED: Define currentDate and cycleStartDate
@@ -11,7 +11,7 @@ const Today: React.FC = () => {
   const currentLunarDay: LunarDay | undefined = getLunarDayForDate(
     currentDate,
     cycleStartDate,
-    lunarDays
+    lunarDays,
   )
 
   if (!currentLunarDay) {
@@ -41,7 +41,7 @@ const Today: React.FC = () => {
           ? currentLunarDay.activities
               .map(
                 (activity) =>
-                  activity.charAt(0).toUpperCase() + activity.slice(1)
+                  activity.charAt(0).toUpperCase() + activity.slice(1),
               )
               .join(', ')
           : 'No specific activities recommended.'}
