@@ -3,6 +3,7 @@ import type { LunarDay } from '../../domain/maramataka/types'
 export const lunarDays: LunarDay[] = [
   {
     id: 'whiro',
+    order: 1,
     nameTr: 'Whiro',
     nameEn: 'Reflection and rest',
     energy: 'low',
@@ -12,6 +13,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'tirea',
+    order: 2,
     nameTr: 'Tirea',
     nameEn: 'Rising energy tasks',
     energy: 'medium',
@@ -21,6 +23,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'ariroa',
+    order: 3,
     nameTr: 'Ariroa',
     nameEn: 'Balanced routine work',
     energy: 'medium',
@@ -29,6 +32,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'rakaumatohi',
+    order: 4,
     nameTr: 'Rākaumatohi',
     nameEn: 'High energy action',
     energy: 'high',
@@ -38,6 +42,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'tangaroa-whakapau',
+    order: 5,
     nameTr: 'Tangaroa-Whakapau',
     nameEn: 'Peak water gathering',
     energy: 'high',
@@ -47,6 +52,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'hoata',
+    order: 6,
     nameTr: 'Hoata',
     nameEn: 'Steady outdoor work',
     energy: 'medium',
@@ -55,6 +61,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'huna',
+    order: 7,
     nameTr: 'Huna',
     nameEn: 'Quiet reflective rest',
     energy: 'low',
@@ -64,6 +71,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'takirau',
+    order: 8,
     nameTr: 'Takirau',
     nameEn: 'Preparation and learning',
     energy: 'medium',
@@ -73,6 +81,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'mawharu',
+    order: 9,
     nameTr: 'Mawharu',
     nameEn: 'Routine outdoor focus',
     energy: 'medium',
@@ -82,6 +91,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'oike',
+    order: 10,
     nameTr: 'Oike',
     nameEn: 'Plant tending planning',
     energy: 'medium',
@@ -91,6 +101,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'otane',
+    order: 11,
     nameTr: 'Ōtane',
     nameEn: 'Active social tasks',
     energy: 'high',
@@ -100,6 +111,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'okoro',
+    order: 12,
     nameTr: 'Ōkoro',
     nameEn: 'Steady tending work',
     energy: 'medium',
@@ -109,6 +121,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'ohua',
+    order: 13,
     nameTr: 'Ōhūa',
     nameEn: 'Light garden prep',
     energy: 'medium',
@@ -118,6 +131,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'korekore',
+    order: 14,
     nameTr: 'Korekore',
     nameEn: 'Inward self care',
     energy: 'low',
@@ -126,6 +140,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'tuatahi',
+    order: 15,
     nameTr: 'Tuatahi',
     nameEn: 'Medium effort tasks',
     energy: 'medium',
@@ -135,6 +150,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'orongonui',
+    order: 16,
     nameTr: 'Orongonui',
     nameEn: 'Active food gathering',
     energy: 'high',
@@ -143,6 +159,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'tamatea-aio',
+    order: 17,
     nameTr: 'Tamatea‑Āio',
     nameEn: 'Introspective rest planning',
     energy: 'low',
@@ -151,6 +168,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'atua',
+    order: 18,
     nameTr: 'Atua',
     nameEn: 'Creative steady preparation',
     energy: 'medium',
@@ -160,6 +178,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'whakahaehae',
+    order: 19,
     nameTr: 'Whakahaehae',
     nameEn: 'Energetic productive work',
     energy: 'high',
@@ -168,6 +187,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'rawea',
+    order: 20,
     nameTr: 'Rawea',
     nameEn: 'Garden light work',
     energy: 'medium',
@@ -177,6 +197,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'omutu',
+    order: 21,
     nameTr: 'Ōmutu',
     nameEn: 'Practical preparation work',
     energy: 'medium',
@@ -185,6 +206,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'tamatea-a-ngana',
+    order: 22,
     nameTr: 'Tamatea-ā-Ngana',
     nameEn: 'Learning and planning',
     energy: 'medium',
@@ -194,6 +216,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'turu',
+    order: 23,
     nameTr: 'Turu',
     nameEn: 'Calm inner rest',
     energy: 'low',
@@ -202,6 +225,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'whakapiri',
+    order: 24,
     nameTr: 'Whakapiri',
     nameEn: 'Balanced outdoor tasks',
     energy: 'medium',
@@ -210,6 +234,7 @@ export const lunarDays: LunarDay[] = [
   },
   {
     id: 'mutuwhenua',
+    order: 25,
     nameTr: 'Mutuwhenua',
     nameEn: 'Preparation light activities',
     energy: 'medium',
