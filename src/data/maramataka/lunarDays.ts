@@ -218,3 +218,28 @@ export const lunarDays: LunarDay[] = [
       'Steady day. Good for preparation and light outdoor activities.',
   },
 ]
+
+//ID slug validation only
+const ID_SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+function validateLunarDayIds(days: LunarDay[]) {
+  const seen = new Set<string>()
+
+  for (const day of days) {
+    if (!ID_SLUG_RE.test(day.id)) {
+      throw new Error(
+        `Invalid lunar day id "${day.id}". Use lowercase ASCII slug format.`,
+      )
+    }
+
+    if (seen.has(day.id)) {
+      throw new Error(`Duplicate lunar day id "${day.id}". IDs must be unique.`)
+    }
+
+    seen.add(day.id)
+  }
+}
+
+if (import.meta.env.DEV) {
+  validateLunarDayIds(lunarDays)
+}

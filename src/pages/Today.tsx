@@ -29,7 +29,7 @@ const Today: React.FC = () => {
   return (
     <div className="TodayPage">
       <h2>Today's Maramataka Day:</h2>
-      <h1>{currentLunarDay.name}</h1>
+      <h1>{currentLunarDay.nameTr}</h1>
       <p>
         <strong>Energy:</strong>{' '}
         {currentLunarDay.energy.charAt(0).toUpperCase() +
