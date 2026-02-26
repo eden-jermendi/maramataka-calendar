@@ -219,7 +219,7 @@ export const lunarDays: LunarDay[] = [
   },
 ]
 
-//ID slug validation only
+// ID slug validation only
 const ID_SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 function validateLunarDayIds(days: LunarDay[]) {
@@ -243,3 +243,8 @@ function validateLunarDayIds(days: LunarDay[]) {
 if (import.meta.env.DEV) {
   validateLunarDayIds(lunarDays)
 }
+
+// look up script
+export const lunarDaysById: Record<string, LunarDay> = Object.fromEntries(
+  lunarDays.map((day) => [day.id, day]),
+)
