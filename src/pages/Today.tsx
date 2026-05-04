@@ -2,9 +2,9 @@ import React from 'react'
 import { maramatakaService } from '../lib/maramatakaService'
 
 const Today: React.FC = () => {
-  // Using May 20, 2026 to match our mock anchor data for testing
-  const testDate = new Date('2026-05-20')
-  const currentLunarDay = maramatakaService.getLunarDayForDate(testDate)
+  // Uses the actual system date (May 4, 2026 in this session)
+  const today = new Date()
+  const currentLunarDay = maramatakaService.getLunarDayForDate(today)
 
   if (!currentLunarDay) {
     return (

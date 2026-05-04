@@ -56,7 +56,8 @@ export const mockLunarDays: MockLunarDay[] = [
 // 2. Core Lunar Months Data
 export const mockLunarMonths: MockLunarMonth[] = [
   { id: 'month-kopu', nameTeReo: 'Te Rima o Kōpū', nameEnglish: 'Nov-Dec cycle' },
-  { id: 'month-hakihea', nameTeReo: 'Hakihea', nameEnglish: 'Dec-Jan cycle' }
+  { id: 'month-hakihea', nameTeReo: 'Hakihea', nameEnglish: 'Dec-Jan cycle' },
+  { id: 'month-current', nameTeReo: 'Haratua', nameEnglish: 'April-May cycle' }
 ];
 
 // 3. The Date Anchor (Maps real-world dates to when the lunar month begins)
@@ -65,6 +66,11 @@ export const mockGregorianAnchors: MockGregorianAnchor[] = [
     lunarMonthId: 'month-kopu',
     gregorianStartDate: '2026-05-20', // Example start date
     year: 2026
+  },
+  {
+    lunarMonthId: 'month-current',
+    gregorianStartDate: '2026-04-18', // Start of the current cycle
+    year: 2026
   }
 ];
 
@@ -72,5 +78,6 @@ export const mockGregorianAnchors: MockGregorianAnchor[] = [
 export const mockLunarMonthDays = [
   { lunarMonthId: 'month-kopu', dayNumber: 1, lunarDayId: 'day-whiro' },
   { lunarMonthId: 'month-kopu', dayNumber: 2, lunarDayId: 'day-ouenuku' },
-  { lunarMonthId: 'month-kopu', dayNumber: 15, lunarDayId: 'day-rakaumatohi' }
+  { lunarMonthId: 'month-kopu', dayNumber: 15, lunarDayId: 'day-rakaumatohi' },
+  { lunarMonthId: 'month-current', dayNumber: 17, lunarDayId: 'day-rakaumatohi' }
 ];
