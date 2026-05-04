@@ -64,6 +64,40 @@ export const maramatakaService = {
   },
 
   /**
+   * Finds the date of the previous month's anchor.
+   */
+  getPreviousMonthAnchor(date: Date): Date | null {
+    const { anchor } = this.getDayInfo(date);
+    if (!anchor) return null;
+
+    const sortedAnchors = [...mockGregorianAnchors].sort((a, b) => 
+      new Date(a.gregorianStartDate).getTime() - new Date(b.gregorianStartDate).getTime()
+    );
+
+    const currentIndex = sortedAnchors.findIndex(a => a.gregorianStartDate === anchor.gregorianStartDate);
+    if (currentIndex <= 0) return null;
+
+    return new Date(sortedAnchors[currentIndex - 1].gregorianStartDate);
+  },
+
+  /**
+   * Finds the date of the next month's anchor.
+   */
+  getNextMonthAnchor(date: Date): Date | null {
+    const { anchor } = this.getDayInfo(date);
+    if (!anchor) return null;
+
+    const sortedAnchors = [...mockGregorianAnchors].sort((a, b) => 
+      new Date(a.gregorianStartDate).getTime() - new Date(b.gregorianStartDate).getTime()
+    );
+
+    const currentIndex = sortedAnchors.findIndex(a => a.gregorianStartDate === anchor.gregorianStartDate);
+    if (currentIndex === -1 || currentIndex >= sortedAnchors.length - 1) return null;
+
+    return new Date(sortedAnchors[currentIndex + 1].gregorianStartDate);
+  },
+
+  /**
    * Internal helper to find anchor, next anchor, and day number
    */
   private getDayInfo(date: Date) {
