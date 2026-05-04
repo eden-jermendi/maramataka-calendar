@@ -2,7 +2,6 @@ import {
   mockLunarDays, 
   mockLunarMonths,
   mockGregorianAnchors, 
-  mockLunarMonthDays,
   MockLunarDay,
   MockLunarMonth
 } from '../data/mockMaramatakaData';
@@ -18,34 +17,39 @@ export const maramatakaService = {
    */
   getLunarDayForDate(date: Date): MockLunarDay | null {
     const { dayNumber, anchor } = this.getDayInfo(date);
-    if (!anchor) return null;
+    if (!anchor || dayNumber < 1) return null;
 
-    const monthDay = mockLunarMonthDays.find(
-      md => md.lunarMonthId === anchor.lunarMonthId && md.dayNumber === dayNumber
-    );
-
-    if (!monthDay) return null;
-    return mockLunarDays.find(d => d.id === monthDay.lunarDayId) || null;
+    // Automation: Directly map dayNumber to the standard 30-day sequence
+    // If the month is 29 days, Day 30 simply won't be requested or displayed.
+    return mockLunarDays[dayNumber - 1] || null;
   },
 
   /**
    * Retrieves an overview of the lunar month for a given Gregorian Date.
    */
   getLunarMonthForDate(date: Date): MonthOverview | null {
-    const { anchor } = this.getDayInfo(date);
+    const { anchor, nextAnchor } = this.getDayInfo(date);
     if (!anchor) return null;
 
     const month = mockLunarMonths.find(m => m.id === anchor.lunarMonthId);
     if (!month) return null;
 
-    // Generate 30 days for the overview
-    const days = Array.from({ length: 30 }, (_, i) => {
+    // Calculate month length based on distance to next anchor
+    let monthLength = 30;
+    if (nextAnchor) {
+      const start = new Date(anchor.gregorianStartDate);
+      const end = new Date(nextAnchor.gregorianStartDate);
+      start.setHours(0, 0, 0, 0);
+      end.setHours(0, 0, 0, 0);
+      monthLength = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+    // Safety: Maramataka months are 29 or 30 days.
+    const finalLength = Math.min(Math.max(monthLength, 29), 30);
+
+    const days = Array.from({ length: finalLength }, (_, i) => {
       const dayNumber = i + 1;
-      const mapping = mockLunarMonthDays.find(
-        md => md.lunarMonthId === anchor.lunarMonthId && md.dayNumber === dayNumber
-      );
-      const lunarDay = mapping ? (mockLunarDays.find(d => d.id === mapping.lunarDayId) || null) : null;
-      
+      const lunarDay = mockLunarDays[i] || null;
       return { dayNumber, lunarDay };
     });
 
@@ -60,23 +64,32 @@ export const maramatakaService = {
   },
 
   /**
-   * Internal helper to find anchor and day number
+   * Internal helper to find anchor, next anchor, and day number
    */
   private getDayInfo(date: Date) {
     const normalizedRequestedDate = new Date(date);
     normalizedRequestedDate.setHours(0, 0, 0, 0);
 
     const sortedAnchors = [...mockGregorianAnchors].sort((a, b) => 
-      new Date(b.gregorianStartDate).getTime() - new Date(a.gregorianStartDate).getTime()
+      new Date(a.gregorianStartDate).getTime() - new Date(b.gregorianStartDate).getTime()
     );
 
-    const anchor = sortedAnchors.find(a => {
-      const anchorDate = new Date(a.gregorianStartDate);
+    // Find the latest anchor that is NOT in the future
+    let anchorIndex = -1;
+    for (let i = 0; i < sortedAnchors.length; i++) {
+      const anchorDate = new Date(sortedAnchors[i].gregorianStartDate);
       anchorDate.setHours(0, 0, 0, 0);
-      return anchorDate <= normalizedRequestedDate;
-    });
+      if (anchorDate <= normalizedRequestedDate) {
+        anchorIndex = i;
+      } else {
+        break;
+      }
+    }
 
-    if (!anchor) return { dayNumber: -1, anchor: null };
+    if (anchorIndex === -1) return { dayNumber: -1, anchor: null, nextAnchor: null };
+
+    const anchor = sortedAnchors[anchorIndex];
+    const nextAnchor = sortedAnchors[anchorIndex + 1] || null;
 
     const startDate = new Date(anchor.gregorianStartDate);
     startDate.setHours(0, 0, 0, 0);
@@ -84,6 +97,6 @@ export const maramatakaService = {
     const diffTime = normalizedRequestedDate.getTime() - startDate.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     
-    return { dayNumber: diffDays + 1, anchor };
+    return { dayNumber: diffDays + 1, anchor, nextAnchor };
   }
 };
