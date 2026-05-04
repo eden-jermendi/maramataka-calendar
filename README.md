@@ -1,57 +1,48 @@
 # Hina o te Maramataka
 
+## Screenshot
+
+![screenshot](./docs/screenshots/maramataka-screenshot.png)
+
 ## Project Overview
 
-Hina o te Maramataka is a React + TypeScript project designed to showcase a Māori lunar calendar with contextual guidance and a personal notes section. The app will eventually pull lunar phase data from an API and map it to traditional maramataka names, energy levels, and daily recommendations.
+Hina o te Maramataka is a React + TypeScript application designed to showcase a Māori lunar calendar with contextual guidance and a personal pattern-tracking reflection section. The app maps real-world Gregorian dates to traditional maramataka phases, energy levels, and daily recommendations using a custom-built, time-aware engine.
 
-This project is currently in the **setup phase**: the folder structure and core files are in place, but no functional components or API integrations exist yet.
+This project is currently in the **MVP 2 Finalized phase**: the core calendar engine is complete, navigation is interactive, and personal cyclical reflections are functional.
 
-## Goals
+## Features
 
-- Display lunar calendar phases with Māori names.
-- Provide a short description of energy levels associated with each phase.
-- Include daily recommendations based on the phase.
-
-  Stretch:
-- Allow users to write and save personal notes tied to each day and lunar phase.
-- Maintain a clean, beautiful UI with future potential for backend integration and full-stack capabilities.
+- **Time-Aware Engine**: Automatically calculates the current lunar phase for any date between 2024 and 2026.
+- **Interactive Month Grid**: A 7-column calendar view allowing users to cycle through months and deep-dive into specific phases.
+- **Cultural Grounding**: Integrated guidance from sources like Dr. Hinemoa Elder’s _Wawata_, featuring energy indicators, whakataukī, and activity recommendations.
+- **Private Reflections**: A secure, device-local journaling system that anchors personal notes to stable lunar slugs, enabling month-to-month pattern tracking.
+- **Responsive Deep Blue UI**: A thematic, high-contrast interface designed for clarity and focus.
 
 ## Current Status
 
-- Folder structure created.
-- Placeholder files set up for components, hooks, types, API, and pages.
-- No functional UI, API calls, or data persistence yet.
+- [x] **MVP 1: Foundation**: Domain models, static data seeding, and basic dynamic lookup.
+- [x] **MVP 2: Core Experience**: Routing, Interactive Month Grid, and LocalStorage Reflection persistence.
+- [ ] **Data Persistence & Auth**: Transition to a proper database (SQLite/Knex) and implement secure authentication.
+- [ ] **MVP 3: Advanced Insight**: Pattern visualization, data exports, and enhanced UI transitions.
 
 ## Tech Stack
 
-- React + TypeScript (TSX)
-- Tailwind CSS for styling
-- Local storage for initial notes persistence
-- Placeholder for API integration for lunar phase data
+- **Frontend**: React + TypeScript (TSX)
+- **Routing**: React Router Dom
+- **Styling**: Vanilla CSS (Custom Thematic variables)
+- **Persistence**: Browser LocalStorage (Privacy-first)
+- **Data Logic**: Custom Service Layer with Gregorian-to-Lunar anchoring
 
 ## Next Steps
 
-1. Lock the domain model
-- Update LunarDay type.
-- Enforce ASCII-only slug IDs.
-- Single source of truth.
-2.	Align data
-- Update dataset.
-- Add lunarDaysById lookup map.
-3. Add safe selector
-- monthId + dayNumber → lunarDay
-- Validate and return safe result (no UI crashes).
-4. Stub one month
-- 5–10 days only.
-- All IDs must resolve.
-5.	Wire Today + Month
-- Use mock { monthId, dayNumber }
-- Render via safe lookup.
-- No Gregorian logic.
-6.	Extend only after stable
-- Add ordering, legend, sources.
-- Date accuracy is Phase 2.
+1. **Pattern Visualization**
+   - Create a view to compare reflections across multiple cycles of the same lunar day.
+2. **Refine UI/UX**
+   - Implement smoother transitions between routes.
+   - Enhance the mobile grid responsiveness.
+3. **Data Expansion**
+   - Incorporate further Wawata journal prompts for all 30 phases.
 
 ---
 
-_Note: This project is in early development and all cultural references to maramataka are for educational and personal use. Accuracy will be improved with further research over time._
+_Note: This project is in active development. All cultural references to maramataka are for educational and personal use, informed by the cited sources in the About page. Accuracy is maintained through verified 2025/2026 anchors._
