@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { maramatakaService } from '../lib/maramatakaService'
+import { reflectionService } from '../lib/reflectionService'
+import { Reflection } from '../domain/maramataka/types'
+import ReflectionForm from '../components/maramataka/ReflectionForm'
+import ReflectionList from '../components/maramataka/ReflectionList'
 
 const DayView: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const day = id ? maramatakaService.getLunarDayById(id) : null
+  
+  const [showReflections, setShowReflections] = useState(false)
+  const [reflections, setReflections] = useState<Reflection[]>([])
+
+  useEffect(() => {
+    if (day) {
+      setReflections(reflectionService.getReflectionsForLunarDay(day.id))
+    }
+  }, [day])
+
+  const refreshReflections = () => {
+    if (day) {
+      setReflections(reflectionService.getReflectionsForLunarDay(day.id))
+    }
+  }
 
   if (!day) {
     return (
@@ -57,12 +76,42 @@ const DayView: React.FC = () => {
         &quot;{day.whakatauki || 'No whakataukī available for this day.'}&quot;
       </p>
 
-      <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '8px' }}>
+      <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem' }}>
         <p>
           <strong>Recommended:</strong>{' '}
           {day.recommendedActivities.join(', ')}
         </p>
         <p className="description" style={{ lineHeight: '1.6' }}>{day.meaningShort}</p>
+      </div>
+
+      <div style={{ margin: '2rem 0' }}>
+        <button 
+          onClick={() => setShowReflections(!showReflections)}
+          style={{ 
+            background: 'none', 
+            border: '1px solid var(--accent-color)', 
+            color: 'var(--text-color)', 
+            padding: '0.8rem 1.5rem', 
+            borderRadius: '8px', 
+            cursor: 'pointer',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            width: '100%'
+          }}
+        >
+          {showReflections ? '🙈 Hide My Reflections' : '👁️ Show My Reflections (Private)'}
+        </button>
+
+        {showReflections && (
+          <div style={{ marginTop: '2rem' }}>
+            <h3 style={{ textAlign: 'left' }}>New Reflection</h3>
+            <p style={{ textAlign: 'left', color: 'var(--secondary-text)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+              Prompt: {day.meaningShort}
+            </p>
+            <ReflectionForm lunarDayId={day.id} onSave={refreshReflections} />
+            <ReflectionList reflections={reflections} />
+          </div>
+        )}
       </div>
 
       <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>

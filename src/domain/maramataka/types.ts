@@ -10,3 +10,12 @@ export type LunarDay = {
   // future proofing for About + citations
   sourceIds?: string[]
 }
+
+export type Reflection = {
+  id: string
+  lunarDayId: string
+  gregorianDateTime: string // ISO string
+  observationTeTaiao: string
+  personalEnergyLevel: string
+  reflectionText: string
+}
