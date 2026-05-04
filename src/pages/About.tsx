@@ -1,34 +1,37 @@
 import React from 'react'
-import { lunarDays } from '../data/maramataka/lunarDays'
 import { sources } from '../data/maramataka/sources'
 
 const About: React.FC = () => {
-  const referencedSourceIds = Array.from(
-    new Set(lunarDays.flatMap((day) => day.sourceIds ?? [])),
-  )
-
   return (
     <div className="AboutPage">
-      <h1>About</h1>
-      <h2>Sources</h2>
+      <h1>About Hina o Te Maramataka</h1>
+      
+      <section style={{ marginBottom: '2rem', borderLeft: '4px solid #ccc', paddingLeft: '1rem' }}>
+        <p style={{ fontWeight: 'bold' }}>Important Note on Variations:</p>
+        <p>
+          Maramataka varies significantly between different iwi and hapū depending on environmental 
+          and geographical differences. This application provides a generalized view based on the 
+          sources below. We encourage users to seek out the specific Maramataka traditions of their 
+          own mana whenua.
+        </p>
+      </section>
 
-      {referencedSourceIds.length === 0 ? (
-        <p>No sources linked yet.</p>
-      ) : (
-        <ul>
-          {sources.map((source) => (
-            <li key={source.id}>
-              {source.url ? (
-                <a href={source.url} target="_blank" rel="noreferrer">
-                  {source.title}
-                </a>
-              ) : (
-                source.title
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+      <h2>Sources</h2>
+      <p>This project is informed by the following primary sources:</p>
+
+      <ul>
+        {sources.map((source) => (
+          <li key={source.id} style={{ marginBottom: '0.5rem' }}>
+            {source.url ? (
+              <a href={source.url} target="_blank" rel="noreferrer" style={{ fontWeight: 'bold' }}>
+                {source.title}
+              </a>
+            ) : (
+              <span style={{ fontWeight: 'bold' }}>{source.title}</span>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

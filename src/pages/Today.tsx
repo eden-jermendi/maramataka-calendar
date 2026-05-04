@@ -15,23 +15,40 @@ const Today: React.FC = () => {
     )
   }
 
+  const energyColors: Record<string, string> = {
+    High: '#d4edda',
+    Medium: '#fff3cd',
+    Low: '#f8d7da',
+  }
+
   return (
     <div className="TodayPage">
       <h2>Today&apos;s Maramataka Day:</h2>
       <h1>{currentLunarDay.nameTeReo} ({currentLunarDay.nameEnglish})</h1>
-      <p>
-        <strong>Energy:</strong> {currentLunarDay.energyLevel}
+      
+      <div style={{ 
+        display: 'inline-block', 
+        padding: '4px 12px', 
+        borderRadius: '16px', 
+        backgroundColor: energyColors[currentLunarDay.energyLevel] || '#eee',
+        marginBottom: '1rem',
+        fontWeight: 'bold',
+        border: '1px solid rgba(0,0,0,0.1)'
+      }}>
+        {currentLunarDay.energyLevel} Energy
+      </div>
+
+      <p style={{ fontStyle: 'italic', color: '#555', fontSize: '1.1rem' }}>
+        &quot;{currentLunarDay.whakatauki || 'No whakataukī available for today.'}&quot;
       </p>
+
       <p>
-        <strong>Whakataukī:</strong> <em>{currentLunarDay.whakatauki || 'None'}</em>
-      </p>
-      <p>
-        <strong>Activities:</strong>{' '}
+        <strong>Recommended Activities:</strong>{' '}
         {currentLunarDay.recommendedActivities.length > 0
           ? currentLunarDay.recommendedActivities.join(', ')
           : 'No specific activities recommended.'}
       </p>
-      <p className="description">{currentLunarDay.meaningShort}</p>
+      <p className="description" style={{ lineHeight: '1.6' }}>{currentLunarDay.meaningShort}</p>
     </div>
   )
 }

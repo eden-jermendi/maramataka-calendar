@@ -1,26 +1,64 @@
 import { 
   mockLunarDays, 
+  mockLunarMonths,
   mockGregorianAnchors, 
   mockLunarMonthDays,
-  MockLunarDay
+  MockLunarDay,
+  MockLunarMonth
 } from '../data/mockMaramatakaData';
+
+export interface MonthOverview {
+  month: MockLunarMonth;
+  days: { dayNumber: number; lunarDay: MockLunarDay | null }[];
+}
 
 export const maramatakaService = {
   /**
    * Retrieves the corresponding MockLunarDay for a given Gregorian Date.
-   * 
-   * Logic:
-   * 1. Finds the latest anchor that started on or before the input date.
-   * 2. Calculates the day difference (1-indexed).
-   * 3. Looks up the mapping in mockLunarMonthDays.
-   * 4. Returns the full MockLunarDay object or null.
    */
   getLunarDayForDate(date: Date): MockLunarDay | null {
-    // Normalize date to midnight to avoid hours/minutes affecting day calculation
+    const { dayNumber, anchor } = this.getDayInfo(date);
+    if (!anchor) return null;
+
+    const monthDay = mockLunarMonthDays.find(
+      md => md.lunarMonthId === anchor.lunarMonthId && md.dayNumber === dayNumber
+    );
+
+    if (!monthDay) return null;
+    return mockLunarDays.find(d => d.id === monthDay.lunarDayId) || null;
+  },
+
+  /**
+   * Retrieves an overview of the lunar month for a given Gregorian Date.
+   */
+  getLunarMonthForDate(date: Date): MonthOverview | null {
+    const { anchor } = this.getDayInfo(date);
+    if (!anchor) return null;
+
+    const month = mockLunarMonths.find(m => m.id === anchor.lunarMonthId);
+    if (!month) return null;
+
+    // Generate 30 days for the overview
+    const days = Array.from({ length: 30 }, (_, i) => {
+      const dayNumber = i + 1;
+      const mapping = mockLunarMonthDays.find(
+        md => md.lunarMonthId === anchor.lunarMonthId && md.dayNumber === dayNumber
+      );
+      const lunarDay = mapping ? (mockLunarDays.find(d => d.id === mapping.lunarDayId) || null) : null;
+      
+      return { dayNumber, lunarDay };
+    });
+
+    return { month, days };
+  },
+
+  /**
+   * Internal helper to find anchor and day number
+   */
+  private getDayInfo(date: Date) {
     const normalizedRequestedDate = new Date(date);
     normalizedRequestedDate.setHours(0, 0, 0, 0);
 
-    // 1. Find the applicable anchor
     const sortedAnchors = [...mockGregorianAnchors].sort((a, b) => 
       new Date(b.gregorianStartDate).getTime() - new Date(a.gregorianStartDate).getTime()
     );
@@ -31,24 +69,14 @@ export const maramatakaService = {
       return anchorDate <= normalizedRequestedDate;
     });
 
-    if (!anchor) return null;
+    if (!anchor) return { dayNumber: -1, anchor: null };
 
-    // 2. Calculate day number (1-indexed)
     const startDate = new Date(anchor.gregorianStartDate);
     startDate.setHours(0, 0, 0, 0);
     
     const diffTime = normalizedRequestedDate.getTime() - startDate.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const dayNumber = diffDays + 1;
-
-    // 3. Find the Lunar Day ID from the join table
-    const monthDay = mockLunarMonthDays.find(
-      md => md.lunarMonthId === anchor.lunarMonthId && md.dayNumber === dayNumber
-    );
-
-    if (!monthDay) return null;
-
-    // 4. Return the full Lunar Day object
-    return mockLunarDays.find(d => d.id === monthDay.lunarDayId) || null;
+    
+    return { dayNumber: diffDays + 1, anchor };
   }
 };

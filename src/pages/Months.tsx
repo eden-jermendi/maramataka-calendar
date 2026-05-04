@@ -1,44 +1,59 @@
 import React from 'react'
-import { maramatakaMonthsById } from '../data/maramataka/lunarMonths'
-import { lunarDaysById } from '../data/maramataka/lunarDays'
+import { maramatakaService } from '../lib/maramatakaService'
 
 const Month: React.FC = () => {
-  const selectedMonthId = 'kohitatea'
-  const month = maramatakaMonthsById[selectedMonthId]
+  const today = new Date()
+  const overview = maramatakaService.getLunarMonthForDate(today)
 
-  if (!month) {
+  if (!overview) {
     return (
       <div className="MonthPage">
-        <h1>Month</h1>
-        <p>Month not found: {selectedMonthId}</p>
+        <h2>Month Overview</h2>
+        <p>No lunar month data found for this period.</p>
       </div>
     )
   }
 
+  const { month, days } = overview
+
   return (
     <div className="MonthPage">
-      <h1>{month.nameTr}</h1>
+      <h2>{month.nameTeReo} ({month.nameEnglish})</h2>
 
-      <ul>
-        {month.days.map((lunarDayId, index) => {
-          const lunarDay = lunarDaysById[lunarDayId]
-
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {days.map(({ dayNumber, lunarDay }) => {
           if (!lunarDay) {
             return (
-              <li key={`${lunarDayId}-${index}`}>
-                Day {index + 1}: Missing lunar day ({lunarDayId})
+              <li key={dayNumber} style={{ marginBottom: '0.5rem', color: '#666' }}>
+                Day {dayNumber}: Data not available
               </li>
             )
           }
 
+          const energyColors: Record<string, string> = {
+            High: '#d4edda',
+            Medium: '#fff3cd',
+            Low: '#f8d7da',
+          }
+
           return (
-            <li key={lunarDay.id}>
-              Day {index + 1}: {lunarDay.nameTr}
+            <li key={dayNumber} style={{ marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <strong>Day {dayNumber}: {lunarDay.nameTeReo}</strong>
+                <span style={{ 
+                  fontSize: '0.8rem', 
+                  padding: '2px 8px', 
+                  borderRadius: '12px', 
+                  backgroundColor: energyColors[lunarDay.energyLevel] || '#eee',
+                  border: '1px solid rgba(0,0,0,0.1)'
+                }}>
+                  {lunarDay.energyLevel} Energy
+                </span>
+              </div>
             </li>
           )
         })}
       </ul>
-      {/* // TODO: add legend when month grid/calendar view is introduced */}
     </div>
   )
 }
