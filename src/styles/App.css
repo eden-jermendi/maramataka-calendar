@@ -1,0 +1,164 @@
+/* src/styles/App.css */
+
+:root {
+  --bg-color: #0d1b2a;
+  --text-color: #e0e1dd;
+  --secondary-text: #778da9;
+  --accent-color: #415a77;
+  --border-color: #1b263b;
+  
+  --energy-high-border: #e0e1dd;
+  --energy-medium-bg: #9f7aea; /* Purple */
+  --energy-low-bg: #ffffff;    /* White */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1, h2, h3 {
+  color: #fff;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+nav a {
+  color: var(--secondary-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--text-color);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 2rem 0;
+}
+
+/* Energy Indicators */
+.energy-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.energy-high {
+  border: 2px solid var(--energy-high-border);
+  background: transparent;
+}
+
+.energy-medium {
+  background: var(--energy-medium-bg);
+}
+
+.energy-low {
+  background: var(--energy-low-bg);
+}
+
+/* Month Grid */
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 2rem;
+}
+
+.grid-day {
+  background: var(--border-color);
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  border: 1px solid transparent;
+}
+
+.grid-day.has-data {
+  border-color: var(--accent-color);
+}
+
+.grid-day.today {
+  outline: 2px solid var(--energy-medium-bg);
+}
+
+.day-number {
+  align-self: flex-start;
+  color: var(--secondary-text);
+}
+
+/* Today Page */
+.TodayPage {
+  text-align: center;
+}
+
+.bracket-tag {
+  color: var(--secondary-text);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.activity-icons {
+  font-size: 2rem;
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cta-link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--accent-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.cta-link:hover {
+  background-color: #556b8d;
+}
+
+/* Legend */
+.legend {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: var(--border-color);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}

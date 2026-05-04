@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { maramatakaService } from '../lib/maramatakaService'
 
 const Today: React.FC = () => {
@@ -11,44 +12,61 @@ const Today: React.FC = () => {
       <div className="TodayPage">
         <h1>Today</h1>
         <p>No lunar day data found for this date.</p>
+        <Link to="/months" className="cta-link">View Month Overview</Link>
       </div>
     )
   }
 
-  const energyColors: Record<string, string> = {
-    High: '#d4edda',
-    Medium: '#fff3cd',
-    Low: '#f8d7da',
+  const activityEmoji: Record<string, string> = {
+    'Hī ika (Fishing)': '🎣',
+    'Mahi māra (Gardening/Planting)': '🌱',
+    'Toitoi': '♾️',
+    'Harvesting': '🧺',
+    'Planning': '📝'
+  }
+
+  const energyClass: Record<string, string> = {
+    High: 'energy-high',
+    Medium: 'energy-medium',
+    Low: 'energy-low',
   }
 
   return (
     <div className="TodayPage">
-      <h2>Today&apos;s Maramataka Day:</h2>
-      <h1>{currentLunarDay.nameTeReo} ({currentLunarDay.nameEnglish})</h1>
+      {currentLunarDay.bracket && (
+        <div className="bracket-tag">{currentLunarDay.bracket}</div>
+      )}
       
-      <div style={{ 
-        display: 'inline-block', 
-        padding: '4px 12px', 
-        borderRadius: '16px', 
-        backgroundColor: energyColors[currentLunarDay.energyLevel] || '#eee',
-        marginBottom: '1rem',
-        fontWeight: 'bold',
-        border: '1px solid rgba(0,0,0,0.1)'
-      }}>
-        {currentLunarDay.energyLevel} Energy
+      <h2>Today&apos;s Maramataka Day</h2>
+      <h1>{currentLunarDay.nameTeReo}</h1>
+      <p style={{ color: 'var(--secondary-text)', marginTop: '-1rem' }}>{currentLunarDay.nameEnglish}</p>
+      
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', margin: '1rem 0' }}>
+        <span className={`energy-indicator ${energyClass[currentLunarDay.energyLevel]}`}></span>
+        <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{currentLunarDay.energyLevel.toUpperCase()} ENERGY</span>
       </div>
 
-      <p style={{ fontStyle: 'italic', color: '#555', fontSize: '1.1rem' }}>
+      <div className="activity-icons">
+        {currentLunarDay.recommendedActivities.map(act => (
+          <span key={act} title={act}>
+            {activityEmoji[act] || '✨'}
+          </span>
+        ))}
+      </div>
+
+      <p style={{ fontStyle: 'italic', color: 'var(--text-color)', fontSize: '1.2rem', margin: '2rem 0' }}>
         &quot;{currentLunarDay.whakatauki || 'No whakataukī available for today.'}&quot;
       </p>
 
-      <p>
-        <strong>Recommended Activities:</strong>{' '}
-        {currentLunarDay.recommendedActivities.length > 0
-          ? currentLunarDay.recommendedActivities.join(', ')
-          : 'No specific activities recommended.'}
-      </p>
-      <p className="description" style={{ lineHeight: '1.6' }}>{currentLunarDay.meaningShort}</p>
+      <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '8px' }}>
+        <p>
+          <strong>Recommended:</strong>{' '}
+          {currentLunarDay.recommendedActivities.join(', ')}
+        </p>
+        <p className="description" style={{ lineHeight: '1.6' }}>{currentLunarDay.meaningShort}</p>
+      </div>
+
+      <Link to="/months" className="cta-link">View Month Overview</Link>
     </div>
   )
 }

@@ -8,6 +8,7 @@ export interface MockLunarDay {
   whakatauki: string | null;
   meaningShort: string;
   recommendedActivities: string[];
+  bracket?: 'Whakaeke' | 'Mōteatea' | 'Waiata ā-ringa' | 'Poi' | 'Haka' | 'Whakawātea';
 }
 
 export interface MockLunarMonth {
@@ -31,7 +32,8 @@ export const mockLunarDays: MockLunarDay[] = [
     energyLevel: 'Low',
     whakatauki: 'He pō kino, he pō kōkōmuka.',
     meaningShort: 'A time of renewal, introspection, and planting ideas.',
-    recommendedActivities: ['Mahi māra (Gardening/Planting)', 'Planning']
+    recommendedActivities: ['Mahi māra (Gardening/Planting)', 'Planning'],
+    bracket: 'Whakaeke'
   },
   {
     id: 'day-ouenuku',
@@ -40,7 +42,8 @@ export const mockLunarDays: MockLunarDay[] = [
     energyLevel: 'Medium',
     whakatauki: 'Uenuku tū wae rua.',
     meaningShort: 'Exploring our hearts’ desires and establishing stability.',
-    recommendedActivities: ['Hī ika (Fishing)', 'Toitoi']
+    recommendedActivities: ['Hī ika (Fishing)', 'Toitoi'],
+    bracket: 'Whakaeke'
   },
   {
     id: 'day-rakaumatohi',
@@ -49,7 +52,8 @@ export const mockLunarDays: MockLunarDay[] = [
     energyLevel: 'High',
     whakatauki: 'Moea tō poi, moea tō taiaha.',
     meaningShort: 'An abundant and high-energy time where things come to fruition.',
-    recommendedActivities: ['Hī ika (Fishing)', 'Harvesting']
+    recommendedActivities: ['Hī ika (Fishing)', 'Harvesting'],
+    bracket: 'Poi'
   }
 ];
 

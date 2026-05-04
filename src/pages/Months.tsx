@@ -15,45 +15,60 @@ const Month: React.FC = () => {
   }
 
   const { month, days } = overview
+  const currentDayInfo = maramatakaService.getLunarDayForDate(today)
+
+  const energyClass: Record<string, string> = {
+    High: 'energy-high',
+    Medium: 'energy-medium',
+    Low: 'energy-low',
+  }
 
   return (
     <div className="MonthPage">
-      <h2>{month.nameTeReo} ({month.nameEnglish})</h2>
+      <h2>{month.nameTeReo}</h2>
+      <p style={{ color: 'var(--secondary-text)', marginTop: '-1rem' }}>{month.nameEnglish}</p>
 
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <div className="month-grid">
         {days.map(({ dayNumber, lunarDay }) => {
-          if (!lunarDay) {
-            return (
-              <li key={dayNumber} style={{ marginBottom: '0.5rem', color: '#666' }}>
-                Day {dayNumber}: Data not available
-              </li>
-            )
-          }
-
-          const energyColors: Record<string, string> = {
-            High: '#d4edda',
-            Medium: '#fff3cd',
-            Low: '#f8d7da',
-          }
-
+          const isToday = lunarDay && currentDayInfo && lunarDay.id === currentDayInfo.id;
+          
           return (
-            <li key={dayNumber} style={{ marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <strong>Day {dayNumber}: {lunarDay.nameTeReo}</strong>
-                <span style={{ 
-                  fontSize: '0.8rem', 
-                  padding: '2px 8px', 
-                  borderRadius: '12px', 
-                  backgroundColor: energyColors[lunarDay.energyLevel] || '#eee',
-                  border: '1px solid rgba(0,0,0,0.1)'
-                }}>
-                  {lunarDay.energyLevel} Energy
-                </span>
-              </div>
-            </li>
+            <div 
+              key={dayNumber} 
+              className={`grid-day ${lunarDay ? 'has-data' : ''} ${isToday ? 'today' : ''}`}
+            >
+              <span className="day-number">{dayNumber}</span>
+              {lunarDay && (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+                  <span className={`energy-indicator ${energyClass[lunarDay.energyLevel]}`}></span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 'bold', textAlign: 'center' }}>
+                    {lunarDay.nameTeReo}
+                  </span>
+                </div>
+              )}
+            </div>
           )
         })}
-      </ul>
+      </div>
+
+      <section className="legend">
+        <h3>Legend</h3>
+        <div className="legend-item">
+          <span className="energy-indicator energy-high"></span>
+          <span><strong>High Energy:</strong> Abundant, productive time.</span>
+        </div>
+        <div className="legend-item">
+          <span className="energy-indicator energy-medium"></span>
+          <span><strong>Medium Energy:</strong> Stability, moderate activity.</span>
+        </div>
+        <div className="legend-item">
+          <span className="energy-indicator energy-low"></span>
+          <span><strong>Low Energy:</strong> Introspection, renewal, planting.</span>
+        </div>
+        <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--secondary-text)' }}>
+          * High energy is indicated by an outlined circle, Medium by purple, and Low by solid white.
+        </div>
+      </section>
     </div>
   )
 }
