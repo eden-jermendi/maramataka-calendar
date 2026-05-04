@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Today from '../pages/Today'
 import Month from '../pages/Months'
 import About from '../pages/About'
+import DayView from '../pages/DayView'
 import '../styles/App.css'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route path="/" element={<Today />} />
             <Route path="/months" element={<Month />} />
             <Route path="/about" element={<About />} />
+            <Route path="/day/:id" element={<DayView />} />
           </Routes>
         </main>
       </div>

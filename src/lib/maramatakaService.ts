@@ -53,6 +53,13 @@ export const maramatakaService = {
   },
 
   /**
+   * Retrieves a MockLunarDay by its ID.
+   */
+  getLunarDayById(id: string): MockLunarDay | null {
+    return mockLunarDays.find(d => d.id === id) || null;
+  },
+
+  /**
    * Internal helper to find anchor and day number
    */
   private getDayInfo(date: Date) {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { maramatakaService } from '../lib/maramatakaService'
 
 const Month: React.FC = () => {
@@ -33,9 +34,11 @@ const Month: React.FC = () => {
           const isToday = lunarDay && currentDayInfo && lunarDay.id === currentDayInfo.id;
           
           return (
-            <div 
+            <Link 
               key={dayNumber} 
+              to={lunarDay ? `/day/${lunarDay.id}` : '#'}
               className={`grid-day ${lunarDay ? 'has-data' : ''} ${isToday ? 'today' : ''}`}
+              style={{ textDecoration: 'none', color: 'inherit', cursor: lunarDay ? 'pointer' : 'default' }}
             >
               <span className="day-number">{dayNumber}</span>
               {lunarDay && (
@@ -46,7 +49,7 @@ const Month: React.FC = () => {
                   </span>
                 </div>
               )}
-            </div>
+            </Link>
           )
         })}
       </div>
