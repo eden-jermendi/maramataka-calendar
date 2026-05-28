@@ -67,31 +67,31 @@ const Today: React.FC = () => {
   }
 
   const energyClass: Record<string, string> = {
-    High: 'energy-high',
-    Medium: 'energy-medium',
-    Low: 'energy-low',
+    High: 'border-2 border-energy-high-border bg-transparent',
+    Medium: 'bg-energy-medium-bg',
+    Low: 'bg-energy-low-bg',
   }
 
   return (
-    <div className="TodayPage">
-      <div style={{ color: 'var(--secondary-text)', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: 'bold', letterSpacing: '1px' }}>
+    <div className="text-center">
+      <div className="text-secondary-text text-sm mb-4 font-bold tracking-wider">
         {formatGregorianDate(today).toUpperCase()}
       </div>
 
       {currentLunarDay.bracket && (
-        <div className="bracket-tag">{currentLunarDay.bracket}</div>
+        <div className="text-secondary-text uppercase tracking-widest text-sm mb-2">{currentLunarDay.bracket}</div>
       )}
       
-      <h2>Today&apos;s Maramataka Day</h2>
-      <h1>{currentLunarDay.nameTeReo}</h1>
-      <p style={{ color: 'var(--secondary-text)', marginTop: '-1rem' }}>{currentLunarDay.nameEnglish}</p>
+      <h2 className="text-xl font-medium mb-3 text-secondary-text">Today&apos;s Maramataka Day</h2>
+      <h1 className="text-4xl font-bold mb-3">{currentLunarDay.nameTeReo}</h1>
+      <p className="text-secondary-text mb-4">{currentLunarDay.nameEnglish}</p>
       
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', margin: '1rem 0' }}>
-        <span className={`energy-indicator ${energyClass[currentLunarDay.energyLevel]}`}></span>
-        <span style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{currentLunarDay.energyLevel.toUpperCase()} ENERGY</span>
+      <div className="flex items-center justify-center gap-2 my-4">
+        <span className={`w-4 h-4 rounded-full inline-block ${energyClass[currentLunarDay.energyLevel]}`}></span>
+        <span className="font-bold text-sm tracking-wide">{currentLunarDay.energyLevel.toUpperCase()} ENERGY</span>
       </div>
 
-      <div className="activity-icons">
+      <div className="text-3xl my-6 flex justify-center gap-4">
         {currentLunarDay.recommendedActivities.map(act => (
           <span key={act} title={act}>
             {activityEmoji[act] || '✨'}
@@ -99,40 +99,30 @@ const Today: React.FC = () => {
         ))}
       </div>
 
-      <p style={{ fontStyle: 'italic', color: 'var(--text-color)', fontSize: '1.2rem', margin: '2rem 0' }}>
+      <p className="italic text-text-color text-lg my-8">
         &quot;{currentLunarDay.whakatauki || 'No whakataukī available for today.'}&quot;
       </p>
 
-      <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem' }}>
-        <p>
-          <strong>Recommended:</strong>{' '}
+      <div className="text-left bg-white/5 p-6 rounded-lg mb-8">
+        <p className="mb-2">
+          <strong className="font-bold">Recommended:</strong>{' '}
           {currentLunarDay.recommendedActivities.join(', ')}
         </p>
-        <p className="description" style={{ lineHeight: '1.6' }}>{currentLunarDay.meaningShort}</p>
+        <p className="leading-relaxed">{currentLunarDay.meaningShort}</p>
       </div>
 
-      <div style={{ margin: '2rem 0' }}>
+      <div className="my-8">
         <button 
           onClick={() => setShowReflections(!showReflections)}
-          style={{ 
-            background: 'none', 
-            border: '1px solid var(--accent-color)', 
-            color: 'var(--text-color)', 
-            padding: '0.8rem 1.5rem', 
-            borderRadius: '8px', 
-            cursor: 'pointer',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            width: '100%'
-          }}
+          className="w-full bg-transparent border border-accent-color text-text-color py-3 px-6 rounded-lg cursor-pointer text-base font-bold transition-all hover:bg-white/5"
         >
           {showReflections ? '🙈 Hide My Reflections' : '👁️ Show My Reflections (Private)'}
         </button>
 
         {showReflections && (
-          <div style={{ marginTop: '2rem' }}>
-            <h3 style={{ textAlign: 'left' }}>New Reflection</h3>
-            <p style={{ textAlign: 'left', color: 'var(--secondary-text)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold text-left mb-2">New Reflection</h3>
+            <p className="text-left text-secondary-text text-sm mb-4">
               Prompt: {currentLunarDay.meaningShort}
             </p>
             <ReflectionForm lunarDayId={currentLunarDay.id} onSave={refreshReflections} />
@@ -141,7 +131,9 @@ const Today: React.FC = () => {
         )}
       </div>
 
-      <Link to="/months" className="cta-link">View Month Overview</Link>
+      <Link to="/months" className="inline-block mt-8 py-3 px-6 bg-accent-color text-white no-underline rounded-lg font-bold transition-colors hover:bg-[#556b8d]">
+        View Month Overview
+      </Link>
     </div>
   )
 }

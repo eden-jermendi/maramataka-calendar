@@ -35,14 +35,14 @@ const Month: React.FC = () => {
   }
 
   const energyClass: Record<string, string> = {
-    High: 'energy-high',
-    Medium: 'energy-medium',
-    Low: 'energy-low',
+    High: 'border-2 border-energy-high-border bg-transparent',
+    Medium: 'bg-energy-medium-bg',
+    Low: 'bg-energy-low-bg',
   }
 
   return (
-    <div className="MonthPage">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+    <div>
+      <div className="flex items-center justify-between mb-4">
         <button 
           onClick={handlePrev} 
           disabled={!maramatakaService.getPreviousMonthAnchor(viewedDate)}
@@ -51,10 +51,10 @@ const Month: React.FC = () => {
           ← Prev
         </button>
         
-        <div style={{ textAlign: 'center' }}>
-          <h2 style={{ margin: 0 }}>{month.nameTeReo}</h2>
-          <p style={{ color: 'var(--secondary-text)', margin: '0 0 2px 0', fontSize: '0.95rem' }}>{month.nameEnglish}</p>
-          <div style={{ fontSize: '0.8rem', color: 'var(--secondary-text)', opacity: 0.9 }}>{gregorianSpan}</div>
+        <div className="text-center">
+          <h2 className="text-2xl font-bold m-0">{month.nameTeReo}</h2>
+          <p className="text-secondary-text m-0 mb-[2px] text-[0.95rem]">{month.nameEnglish}</p>
+          <div className="text-xs text-secondary-text opacity-90">{gregorianSpan}</div>
         </div>
 
         <button 
@@ -66,22 +66,23 @@ const Month: React.FC = () => {
         </button>
       </div>
 
-      <div className="month-grid">
+      <div className="grid grid-cols-7 gap-2.5 mt-8">
         {days.map(({ dayNumber, lunarDay, gregorianDateStr }) => {
           const isToday = lunarDay && currentDayInfo && lunarDay.id === currentDayInfo.id;
+          const dayHasDataClass = lunarDay ? 'border-accent-color cursor-pointer' : 'border-transparent cursor-default';
+          const dayTodayClass = isToday ? 'outline-2 outline-energy-medium-bg outline' : '';
           
           return (
             <Link 
               key={dayNumber} 
               to={lunarDay ? `/day/${lunarDay.id}?date=${encodeURIComponent(gregorianDateStr)}` : '#'}
-              className={`grid-day ${lunarDay ? 'has-data' : ''} ${isToday ? 'today' : ''}`}
-              style={{ textDecoration: 'none', color: 'inherit', cursor: lunarDay ? 'pointer' : 'default', padding: '8px' }}
+              className={`bg-border-color rounded h-[95px] relative flex flex-col items-center justify-center p-2 text-[0.8rem] border ${dayHasDataClass} ${dayTodayClass} no-underline text-inherit`}
             >
-              <span className="day-number">{dayNumber}</span>
+              <span className="absolute top-1.5 left-2 text-secondary-text text-[0.7rem] font-bold leading-none">{dayNumber}</span>
               {lunarDay && (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-                  <span className={`energy-indicator ${energyClass[lunarDay.energyLevel]}`}></span>
-                  <span style={{ fontSize: '0.65rem', fontWeight: 'bold', textAlign: 'center' }}>
+                <div className="flex flex-col items-center gap-2 mt-4 w-full px-0.5">
+                  <span className={`w-3.5 h-3.5 rounded-full inline-block shrink-0 ${energyClass[lunarDay.energyLevel]}`}></span>
+                  <span className="text-[0.62rem] font-bold text-center leading-tight line-clamp-2">
                     {lunarDay.nameTeReo}
                   </span>
                 </div>
@@ -91,21 +92,21 @@ const Month: React.FC = () => {
         })}
       </div>
 
-      <section className="legend">
-        <h3>Legend</h3>
-        <div className="legend-item">
-          <span className="energy-indicator energy-high"></span>
-          <span><strong>High Energy:</strong> Abundant, productive time.</span>
+      <section className="mt-6 p-6 bg-border-color rounded-lg text-sm">
+        <h3 className="text-lg font-semibold mb-4">Legend</h3>
+        <div className="flex items-center gap-2.5 mb-2">
+          <span className="w-4 h-4 rounded-full inline-block border-2 border-energy-high-border bg-transparent"></span>
+          <span><strong className="font-bold">High Energy:</strong> Abundant, productive time.</span>
         </div>
-        <div className="legend-item">
-          <span className="energy-indicator energy-medium"></span>
-          <span><strong>Medium Energy:</strong> Stability, moderate activity.</span>
+        <div className="flex items-center gap-2.5 mb-2">
+          <span className="w-4 h-4 rounded-full inline-block bg-energy-medium-bg"></span>
+          <span><strong className="font-bold">Medium Energy:</strong> Stability, moderate activity.</span>
         </div>
-        <div className="legend-item">
-          <span className="energy-indicator energy-low"></span>
-          <span><strong>Low Energy:</strong> Introspection, renewal, planting.</span>
+        <div className="flex items-center gap-2.5 mb-2">
+          <span className="w-4 h-4 rounded-full inline-block bg-energy-low-bg"></span>
+          <span><strong className="font-bold">Low Energy:</strong> Introspection, renewal, planting.</span>
         </div>
-        <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--secondary-text)' }}>
+        <div className="mt-4 text-xs text-secondary-text">
           * High energy is indicated by an outlined circle, Medium by purple, and Low by solid white.
         </div>
       </section>

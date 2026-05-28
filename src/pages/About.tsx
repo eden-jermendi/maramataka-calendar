@@ -3,12 +3,12 @@ import { sources } from '../data/maramataka/sources'
 
 const About: React.FC = () => {
   return (
-    <div className="AboutPage">
-      <h1>About Hina o Te Maramataka</h1>
+    <div>
+      <h1 className="text-3xl font-bold mb-6">About Hina o Te Maramataka</h1>
       
-      <section style={{ marginBottom: '2rem', borderLeft: '4px solid #ccc', paddingLeft: '1rem' }}>
-        <p style={{ fontWeight: 'bold' }}>Important Note on Variations:</p>
-        <p>
+      <section className="border-l-4 border-secondary-text pl-4 mb-8">
+        <p className="font-bold text-lg mb-2">Important Note on Variations:</p>
+        <p className="leading-relaxed">
           Maramataka varies significantly between different iwi and hapū depending on environmental 
           and geographical differences. This application provides a generalized view based on the 
           sources below. We encourage users to seek out the specific Maramataka traditions of their 
@@ -16,18 +16,18 @@ const About: React.FC = () => {
         </p>
       </section>
 
-      <h2>Sources</h2>
-      <p>This project is informed by the following primary sources:</p>
+      <h2 className="text-2xl font-bold mb-4">Sources</h2>
+      <p className="text-secondary-text mb-4">This project is informed by the following primary sources:</p>
 
-      <ul>
+      <ul className="list-disc list-inside p-0 flex flex-col gap-3">
         {sources.map((source) => (
-          <li key={source.id} style={{ marginBottom: '0.5rem' }}>
+          <li key={source.id} className="text-base">
             {source.url ? (
-              <a href={source.url} target="_blank" rel="noreferrer" style={{ fontWeight: 'bold' }}>
+              <a href={source.url} target="_blank" rel="noreferrer" className="text-accent-color font-bold hover:underline transition-all">
                 {source.title}
               </a>
             ) : (
-              <span style={{ fontWeight: 'bold' }}>{source.title}</span>
+              <span className="font-bold text-text-color">{source.title}</span>
             )}
           </li>
         ))}

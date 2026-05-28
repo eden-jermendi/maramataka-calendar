@@ -6,7 +6,6 @@ import About from '../pages/About'
 import DayView from '../pages/DayView'
 import { maramatakaService } from '../lib/maramatakaService'
 import { LoadingState } from '../components/ui/FallbackStates'
-import '../styles/App.css'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -25,19 +24,31 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="max-w-[800px] mx-auto p-8">
         <header>
-          <h1>Hina o te Maramataka</h1>
+          <h1 className="text-3xl font-bold mb-4">Hina o te Maramataka</h1>
           <nav>
-            <ul>
-              <li><Link to="/">Today</Link></li>
-              <li><Link to="/months">Months</Link></li>
-              <li><Link to="/about">About</Link></li>
+            <ul className="list-none flex gap-6 p-0 mb-8">
+              <li>
+                <Link to="/" className="text-secondary-text no-underline font-medium transition-colors duration-200 hover:text-text-color">
+                  Today
+                </Link>
+              </li>
+              <li>
+                <Link to="/months" className="text-secondary-text no-underline font-medium transition-colors duration-200 hover:text-text-color">
+                  Months
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-secondary-text no-underline font-medium transition-colors duration-200 hover:text-text-color">
+                  About
+                </Link>
+              </li>
             </ul>
           </nav>
         </header>
 
-        <hr />
+        <hr className="border-0 border-t border-border-color my-8" />
 
         <main>
           {isLoading ? (
