@@ -11,8 +11,13 @@ import type {
 
 export interface MonthOverview {
   month: MockLunarMonth;
-  days: { dayNumber: number; lunarDay: MockLunarDay | null }[];
+  days: { 
+    dayNumber: number; 
+    lunarDay: MockLunarDay | null;
+    gregorianDateStr: string;
+  }[];
   year: number;
+  gregorianSpan: string;
 }
 
 const API_BASE_URL = 'http://localhost:3001/api';
@@ -162,13 +167,67 @@ export const maramatakaService = {
     // Safety: Maramataka months are 29 or 30 days.
     const finalLength = Math.min(Math.max(monthLength, 29), 30);
 
+    const startDate = new Date(anchor.gregorianStartDate);
     const days = Array.from({ length: finalLength }, (_, i) => {
       const dayNumber = i + 1;
       const lunarDay = dbLunarDays[i] || null;
-      return { dayNumber, lunarDay };
+      
+      // Calculate Gregorian Date for this day card
+      const cardDate = new Date(startDate);
+      cardDate.setDate(startDate.getDate() + i);
+      
+      // Format to "28th May" format
+      const formatGregorianDate = (d: Date): string => {
+        const day = d.getDate();
+        const monthNames = [
+          "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        const monthName = monthNames[d.getMonth()];
+        const suffix = (dayNum: number): string => {
+          if (dayNum > 3 && dayNum < 21) return 'th';
+          switch (dayNum % 10) {
+            case 1:  return "st";
+            case 2:  return "nd";
+            case 3:  return "rd";
+            default: return "th";
+          }
+        };
+        return `${day}${suffix(day)} ${monthName}`;
+      };
+
+      return { 
+        dayNumber, 
+        lunarDay, 
+        gregorianDateStr: formatGregorianDate(cardDate) 
+      };
     });
 
-    return { month, days, year: anchor.year };
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + finalLength - 1);
+
+    const formatFullDate = (d: Date): string => {
+      const day = d.getDate();
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      const monthName = monthNames[d.getMonth()];
+      const suffix = (dayNum: number): string => {
+        if (dayNum > 3 && dayNum < 21) return 'th';
+        switch (dayNum % 10) {
+          case 1:  return "st";
+          case 2:  return "nd";
+          case 3:  return "rd";
+          default: return "th";
+        }
+      };
+      return `${day}${suffix(day)} ${monthName} ${d.getFullYear()}`;
+    };
+
+    const gregorianSpan = `${formatFullDate(startDate)} – ${formatFullDate(endDate)}`;
+
+    return { month, days, year: anchor.year, gregorianSpan };
   },
 
   /**

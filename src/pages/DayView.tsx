@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useSearchParams } from 'react-router-dom'
 import { maramatakaService } from '../lib/maramatakaService'
 import { reflectionService } from '../lib/reflectionService'
 import type { Reflection } from '../domain/maramataka/types'
@@ -8,6 +8,8 @@ import ReflectionList from '../components/maramataka/ReflectionList'
 
 const DayView: React.FC = () => {
   const { id } = useParams<{ id: string }>()
+  const [searchParams] = useSearchParams()
+  const dateStr = searchParams.get('date')
   const day = id ? maramatakaService.getLunarDayById(id) : null
   
   const [showReflections, setShowReflections] = useState(false)
@@ -51,6 +53,12 @@ const DayView: React.FC = () => {
 
   return (
     <div className="TodayPage">
+      {dateStr && (
+        <div style={{ color: 'var(--secondary-text)', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: 'bold', letterSpacing: '1px' }}>
+          {dateStr.toUpperCase()}
+        </div>
+      )}
+
       {day.bracket && (
         <div className="bracket-tag">{day.bracket}</div>
       )}
@@ -115,7 +123,7 @@ const DayView: React.FC = () => {
       </div>
 
       <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-        <Link to="/months" className="cta-link">Back to Month</Link>
+        <Link to="/months" className="cta-link">Back to Months</Link>
         <Link to="/" className="cta-link" style={{ background: 'transparent', border: '1px solid var(--accent-color)' }}>
           Back to Today
         </Link>

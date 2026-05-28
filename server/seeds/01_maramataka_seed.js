@@ -402,7 +402,7 @@ export async function seed(knex) {
     { lunar_month_id: 'month-haratua', gregorian_start_date: '2026-04-17', year: 2026 },
 
     // 2026-2027 Cycle
-    { lunar_month_id: 'hune_2026', gregorian_start_date: '2026-05-17', year: 2026 },
+    { lunar_month_id: 'hune_2026', gregorian_start_date: '2026-05-16', year: 2026 },
     { lunar_month_id: 'hurae_2026', gregorian_start_date: '2026-06-15', year: 2026 },
     { lunar_month_id: 'akuhata_2026', gregorian_start_date: '2026-07-14', year: 2026 },
     { lunar_month_id: 'hepetema_2026', gregorian_start_date: '2026-08-13', year: 2026 },

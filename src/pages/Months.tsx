@@ -21,7 +21,7 @@ const Month: React.FC = () => {
     )
   }
 
-  const { month, days, year } = overview
+  const { month, days, gregorianSpan } = overview
   const currentDayInfo = maramatakaService.getLunarDayForDate(today)
 
   const handlePrev = () => {
@@ -53,8 +53,8 @@ const Month: React.FC = () => {
         
         <div style={{ textAlign: 'center' }}>
           <h2 style={{ margin: 0 }}>{month.nameTeReo}</h2>
-          <p style={{ color: 'var(--secondary-text)', margin: 0 }}>{month.nameEnglish}</p>
-          <div style={{ fontSize: '0.85rem', color: 'var(--secondary-text)', marginTop: '2px', fontWeight: 'bold' }}>{year}</div>
+          <p style={{ color: 'var(--secondary-text)', margin: '0 0 2px 0', fontSize: '0.95rem' }}>{month.nameEnglish}</p>
+          <div style={{ fontSize: '0.8rem', color: 'var(--secondary-text)', opacity: 0.9 }}>{gregorianSpan}</div>
         </div>
 
         <button 
@@ -67,15 +67,15 @@ const Month: React.FC = () => {
       </div>
 
       <div className="month-grid">
-        {days.map(({ dayNumber, lunarDay }) => {
+        {days.map(({ dayNumber, lunarDay, gregorianDateStr }) => {
           const isToday = lunarDay && currentDayInfo && lunarDay.id === currentDayInfo.id;
           
           return (
             <Link 
               key={dayNumber} 
-              to={lunarDay ? `/day/${lunarDay.id}` : '#'}
+              to={lunarDay ? `/day/${lunarDay.id}?date=${encodeURIComponent(gregorianDateStr)}` : '#'}
               className={`grid-day ${lunarDay ? 'has-data' : ''} ${isToday ? 'today' : ''}`}
-              style={{ textDecoration: 'none', color: 'inherit', cursor: lunarDay ? 'pointer' : 'default' }}
+              style={{ textDecoration: 'none', color: 'inherit', cursor: lunarDay ? 'pointer' : 'default', padding: '8px' }}
             >
               <span className="day-number">{dayNumber}</span>
               {lunarDay && (
