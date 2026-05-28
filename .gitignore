@@ -26,3 +26,8 @@ dist-ssr
 *.sw?
 
 promptkit
+.antigravitycli
+
+# Backend Database & Dependencies
+server/dev.sqlite3
+server/node_modules

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Reflection } from '../../domain/maramataka/types'
+import type { Reflection } from '../../domain/maramataka/types'
 
 interface ReflectionListProps {
   reflections: Reflection[]

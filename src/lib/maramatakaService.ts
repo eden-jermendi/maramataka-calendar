@@ -1,17 +1,133 @@
 import { 
   mockLunarDays, 
   mockLunarMonths,
-  mockGregorianAnchors, 
+  mockGregorianAnchors
+} from '../data/mockMaramatakaData';
+import type {
   MockLunarDay,
-  MockLunarMonth
+  MockLunarMonth,
+  MockGregorianAnchor
 } from '../data/mockMaramatakaData';
 
 export interface MonthOverview {
   month: MockLunarMonth;
   days: { dayNumber: number; lunarDay: MockLunarDay | null }[];
+  year: number;
 }
 
+const API_BASE_URL = 'http://localhost:3001/api';
+
+// Internal cached state populated from the DB, falling back to static mock data
+let dbLunarDays: MockLunarDay[] = mockLunarDays;
+let dbLunarMonths: MockLunarMonth[] = mockLunarMonths;
+let dbGregorianAnchors: MockGregorianAnchor[] = mockGregorianAnchors;
+let hasLoadedFromDb = false;
+
 export const maramatakaService = {
+  /**
+   * Loads Maramataka datasets from the SQLite/Express backend.
+   * Falls back to static mock data if backend is unreachable.
+   */
+  async loadData(): Promise<boolean> {
+    if (hasLoadedFromDb) return true;
+
+    try {
+      console.log('Fetching Maramataka data from backend...');
+      
+      const [daysRes, monthsRes, anchorsRes] = await Promise.all([
+        fetch(`${API_BASE_URL}/lunar-days`),
+        fetch(`${API_BASE_URL}/lunar-months`),
+        fetch(`${API_BASE_URL}/gregorian-anchors`)
+      ]);
+
+      if (!daysRes.ok || !monthsRes.ok || !anchorsRes.ok) {
+        throw new Error('Failed to fetch from backend API');
+      }
+
+      const daysData = await daysRes.json();
+      const monthsData = await monthsRes.json();
+      const anchorsData = await anchorsRes.json();
+
+      // Map backend database format to frontend service types
+      dbLunarDays = daysData.map((d: any) => ({
+        id: d.id,
+        nameTeReo: d.name_tr,
+        nameEnglish: d.name_en,
+        energyLevel: d.energy_level as 'High' | 'Medium' | 'Low',
+        whakatauki: d.whakatauki,
+        meaningShort: d.meaning_short,
+        recommendedActivities: d.recommended || [],
+        bracket: d.bracket || undefined
+      }));
+
+      dbLunarMonths = monthsData.map((m: any) => ({
+        id: m.id,
+        nameTeReo: m.name_tr,
+        nameEnglish: m.name_en
+      }));
+
+      dbGregorianAnchors = anchorsData.map((a: any) => ({
+        lunarMonthId: a.lunar_month_id,
+        gregorianStartDate: a.gregorian_start_date,
+        year: a.year
+      }));
+
+      // Dev-time data validation (Step 6)
+      if (import.meta.env.DEV) {
+        console.log('Running dev-time database payload validations...');
+        const asciiRegex = /^[a-zA-Z0-9_-]+$/;
+        
+        // 1. Validate Lunar Day IDs uniqueness & ASCII safety
+        const dayIds = new Set<string>();
+        dbLunarDays.forEach(day => {
+          if (dayIds.has(day.id)) {
+            console.error(`[Dev Validation] Duplicate Lunar Day ID found: ${day.id}`);
+          }
+          if (!asciiRegex.test(day.id)) {
+            console.error(`[Dev Validation] Lunar Day ID is not ASCII safe: ${day.id}`);
+          }
+          dayIds.add(day.id);
+        });
+
+        // 2. Validate Month IDs uniqueness & ASCII safety
+        const monthIds = new Set<string>();
+        dbLunarMonths.forEach(month => {
+          if (monthIds.has(month.id)) {
+            console.error(`[Dev Validation] Duplicate Month ID found: ${month.id}`);
+          }
+          if (!asciiRegex.test(month.id)) {
+            console.error(`[Dev Validation] Month ID is not ASCII safe: ${month.id}`);
+          }
+          monthIds.add(month.id);
+        });
+
+        // 3. Validate Anchor associations
+        dbGregorianAnchors.forEach(anchor => {
+          if (!monthIds.has(anchor.lunarMonthId)) {
+            console.error(`[Dev Validation] Anchor references non-existent Month ID: ${anchor.lunarMonthId}`);
+          }
+        });
+        
+        console.log('Database payload validation checks completed.');
+      }
+
+      hasLoadedFromDb = true;
+      console.log('Successfully loaded Maramataka data from database backend.');
+      return true;
+    } catch (error) {
+      console.warn('Backend API unreachable. Falling back to offline static data.', error);
+      // We retain the default static mock data on error, so the app remains functional
+      return false;
+    }
+  },
+
+  /**
+   * Check if data has been successfully fetched from backend.
+   */
+  isDataLoaded(): boolean {
+    return hasLoadedFromDb;
+  },
+
   /**
    * Retrieves the corresponding MockLunarDay for a given Gregorian Date.
    */
@@ -19,9 +135,8 @@ export const maramatakaService = {
     const { dayNumber, anchor } = this.getDayInfo(date);
     if (!anchor || dayNumber < 1) return null;
 
-    // Automation: Directly map dayNumber to the standard 30-day sequence
-    // If the month is 29 days, Day 30 simply won't be requested or displayed.
-    return mockLunarDays[dayNumber - 1] || null;
+    // Direct mapping to cached days sequence
+    return dbLunarDays[dayNumber - 1] || null;
   },
 
   /**
@@ -31,7 +146,7 @@ export const maramatakaService = {
     const { anchor, nextAnchor } = this.getDayInfo(date);
     if (!anchor) return null;
 
-    const month = mockLunarMonths.find(m => m.id === anchor.lunarMonthId);
+    const month = dbLunarMonths.find(m => m.id === anchor.lunarMonthId);
     if (!month) return null;
 
     // Calculate month length based on distance to next anchor
@@ -49,18 +164,18 @@ export const maramatakaService = {
 
     const days = Array.from({ length: finalLength }, (_, i) => {
       const dayNumber = i + 1;
-      const lunarDay = mockLunarDays[i] || null;
+      const lunarDay = dbLunarDays[i] || null;
       return { dayNumber, lunarDay };
     });
 
-    return { month, days };
+    return { month, days, year: anchor.year };
   },
 
   /**
    * Retrieves a MockLunarDay by its ID.
    */
   getLunarDayById(id: string): MockLunarDay | null {
-    return mockLunarDays.find(d => d.id === id) || null;
+    return dbLunarDays.find(d => d.id === id) || null;
   },
 
   /**
@@ -70,7 +185,7 @@ export const maramatakaService = {
     const { anchor } = this.getDayInfo(date);
     if (!anchor) return null;
 
-    const sortedAnchors = [...mockGregorianAnchors].sort((a, b) => 
+    const sortedAnchors = [...dbGregorianAnchors].sort((a, b) => 
       new Date(a.gregorianStartDate).getTime() - new Date(b.gregorianStartDate).getTime()
     );
 
@@ -87,7 +202,7 @@ export const maramatakaService = {
     const { anchor } = this.getDayInfo(date);
     if (!anchor) return null;
 
-    const sortedAnchors = [...mockGregorianAnchors].sort((a, b) => 
+    const sortedAnchors = [...dbGregorianAnchors].sort((a, b) => 
       new Date(a.gregorianStartDate).getTime() - new Date(b.gregorianStartDate).getTime()
     );
 
@@ -100,11 +215,11 @@ export const maramatakaService = {
   /**
    * Internal helper to find anchor, next anchor, and day number
    */
-  private getDayInfo(date: Date) {
+  getDayInfo(date: Date) {
     const normalizedRequestedDate = new Date(date);
     normalizedRequestedDate.setHours(0, 0, 0, 0);
 
-    const sortedAnchors = [...mockGregorianAnchors].sort((a, b) => 
+    const sortedAnchors = [...dbGregorianAnchors].sort((a, b) => 
       new Date(a.gregorianStartDate).getTime() - new Date(b.gregorianStartDate).getTime()
     );
 

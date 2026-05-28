@@ -2,9 +2,32 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { maramatakaService } from '../lib/maramatakaService'
 import { reflectionService } from '../lib/reflectionService'
-import { Reflection } from '../domain/maramataka/types'
+import type { Reflection } from '../domain/maramataka/types'
 import ReflectionForm from '../components/maramataka/ReflectionForm'
 import ReflectionList from '../components/maramataka/ReflectionList'
+import { MissingDataState } from '../components/ui/FallbackStates'
+
+const formatGregorianDate = (date: Date): string => {
+  const day = date.getDate();
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const month = monthNames[date.getMonth()];
+  
+  // Add ordinal suffix (st, nd, rd, th)
+  const suffix = (d: number): string => {
+    if (d > 3 && d < 21) return 'th';
+    switch (d % 10) {
+      case 1:  return "st";
+      case 2:  return "nd";
+      case 3:  return "rd";
+      default: return "th";
+    }
+  };
+  
+  return `${day}${suffix(day)} ${month}`;
+};
 
 const Today: React.FC = () => {
   // Uses the actual system date (May 4, 2026 in this session)
@@ -29,9 +52,8 @@ const Today: React.FC = () => {
   if (!currentLunarDay) {
     return (
       <div className="TodayPage">
-        <h1>Today</h1>
-        <p>No lunar day data found for this date.</p>
-        <Link to="/months" className="cta-link">View Month Overview</Link>
+        <h2>Today</h2>
+        <MissingDataState message="No lunar day data found for today's Gregorian date. Anchors for 2026-2027 may need seeding." />
       </div>
     )
   }
@@ -52,6 +74,10 @@ const Today: React.FC = () => {
 
   return (
     <div className="TodayPage">
+      <div style={{ color: 'var(--secondary-text)', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: 'bold', letterSpacing: '1px' }}>
+        {formatGregorianDate(today).toUpperCase()}
+      </div>
+
       {currentLunarDay.bracket && (
         <div className="bracket-tag">{currentLunarDay.bracket}</div>
       )}

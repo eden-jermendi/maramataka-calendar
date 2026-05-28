@@ -1,4 +1,4 @@
-import { Reflection } from '../domain/maramataka/types'
+import type { Reflection } from '../domain/maramataka/types'
 
 const STORAGE_KEY = 'hina_reflections'
 

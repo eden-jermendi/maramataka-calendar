@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { maramatakaService } from '../lib/maramatakaService'
 import { reflectionService } from '../lib/reflectionService'
-import { Reflection } from '../domain/maramataka/types'
+import type { Reflection } from '../domain/maramataka/types'
 import ReflectionForm from '../components/maramataka/ReflectionForm'
 import ReflectionList from '../components/maramataka/ReflectionList'
 

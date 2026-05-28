@@ -20,6 +20,11 @@ export const sources: Source[] = [
     id: 'wawata-elder',
     title: 'Wawata: Life lessons from the Māori lunar calendar - Dr Hinemoa Elder',
   },
+  {
+    id: 'tewaioratanga',
+    title: 'Living by the Moon Te Maramataka A Te Whānau-a-Apanui by Wiremu Tawhai, (2013), Huia Publishers (Adapted via TEWAIORATANGA.NZ)',
+    url: 'https://tewaioratanga.nz'
+  }
 ]
 
 export const sourcesById: Record<string, Source> = Object.fromEntries(

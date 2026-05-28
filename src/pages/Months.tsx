@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { maramatakaService } from '../lib/maramatakaService'
+import { MissingDataState } from '../components/ui/FallbackStates'
 
 const Month: React.FC = () => {
   const [viewedDate, setViewedDate] = useState(new Date())
@@ -12,13 +13,15 @@ const Month: React.FC = () => {
     return (
       <div className="MonthPage">
         <h2>Month Overview</h2>
-        <p>No lunar month data found for this period.</p>
-        <button onClick={() => setViewedDate(new Date())} className="cta-link">Back to Current Month</button>
+        <MissingDataState message="No lunar month data found for this period. Seeding data for 2026-2027 may be required." />
+        <button onClick={() => setViewedDate(new Date())} className="cta-link" style={{ border: 'none', cursor: 'pointer' }}>
+          Back to Current Month
+        </button>
       </div>
     )
   }
 
-  const { month, days } = overview
+  const { month, days, year } = overview
   const currentDayInfo = maramatakaService.getLunarDayForDate(today)
 
   const handlePrev = () => {
@@ -51,6 +54,7 @@ const Month: React.FC = () => {
         <div style={{ textAlign: 'center' }}>
           <h2 style={{ margin: 0 }}>{month.nameTeReo}</h2>
           <p style={{ color: 'var(--secondary-text)', margin: 0 }}>{month.nameEnglish}</p>
+          <div style={{ fontSize: '0.85rem', color: 'var(--secondary-text)', marginTop: '2px', fontWeight: 'bold' }}>{year}</div>
         </div>
 
         <button 
